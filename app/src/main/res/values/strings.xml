@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Github API</string>
+    <string name="tv_company"> Company</string>
+    <string name="tv_location"> Location</string>
+    <string name="tv_name">Name</string>
+    <string name="tv_username">Username</string>
+    <string name="tv_following">0</string>
+    <string name="tv_follower">0</string>
+    <string name="tv_repository">0</string>
+
+    <string name="follower">Follower </string>
+    <string name="following">Following</string>
+    <string name="search_not_found">Nama Tidak Ditemukan!</string>
+    <string name="searchview">Cari Nama</string>
+    <string name="searchbar">Cari Nama</string>
+    <string name="tv_follower_text">Follower</string>
+    <string name="tv_following_text">Following</string>
+    <string name="tv_repository_text">Repository</string>
+    <string name="no_following"> Tidak ada Following</string>
+</resources>
