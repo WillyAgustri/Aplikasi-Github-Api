@@ -54,13 +54,15 @@ class UserDetailActivity : AppCompatActivity() {
                 .skipMemoryCache(true)
                 .into(binding.imgAvatar)
 
-            binding.tvName.text = detailUser.name
-            binding.tvUsername.text = detailUser.login
-            binding.tvRepository.text = detailUser.publicRepos.toString()
-            binding.tvCompany.text = detailUser.company
-            binding.tvLocation.text = detailUser.location
-            binding.tvFollower.text = detailUser.followers.toString()
-            binding.tvFollowing.text = detailUser.following.toString()
+            detailUser.apply {
+                binding.tvName.text = name
+                binding.tvUsername.text = login
+                binding.tvRepository.text = publicRepos.toString()
+                binding.tvCompany.text = company
+                binding.tvLocation.text = location
+                binding.tvFollower.text = followers.toString()
+                binding.tvFollowing.text = following.toString()
+            }
         }
     }
 

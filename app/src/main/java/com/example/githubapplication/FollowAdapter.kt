@@ -5,25 +5,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.githubapplication.data.response.FollowerResponseItem
-import com.example.githubapplication.data.response.FollowingResponseItem
+import com.example.githubapplication.data.response.FollowResponseItem
 import com.example.githubapplication.databinding.ItemUserBinding
 
 class FollowAdapter : RecyclerView.Adapter<FollowAdapter.ListViewHolder>() {
 
-    private val listUser = ArrayList<FollowerResponseItem>()
+    private val listUser = ArrayList<FollowResponseItem>()
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
-    fun setData(data: ArrayList<FollowerResponseItem>) {
+    fun setData(data: ArrayList<FollowResponseItem>) {
         val diffCallback = DiffUtilCallback(listUser, data)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         listUser.clear()
         listUser.addAll(data)
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -47,7 +46,7 @@ class FollowAdapter : RecyclerView.Adapter<FollowAdapter.ListViewHolder>() {
 
     class ListViewHolder(private val _binding: ItemUserBinding) :
         RecyclerView.ViewHolder(_binding.root) {
-        fun bind(user: FollowerResponseItem) {
+        fun bind(user: FollowResponseItem) {
             _binding.tvUrlGithub.text = user.htmlUrl
             _binding.tvUsername.text = user.login
 
@@ -59,12 +58,12 @@ class FollowAdapter : RecyclerView.Adapter<FollowAdapter.ListViewHolder>() {
     }
 
     fun interface OnItemClickCallback {
-        fun onItemClicked(data: FollowerResponseItem)
+        fun onItemClicked(data: FollowResponseItem)
     }
 
     class DiffUtilCallback(
-        private val oldList: List<FollowerResponseItem>,
-        private val newList: List<FollowerResponseItem>
+        private val oldList: List<FollowResponseItem>,
+        private val newList: List<FollowResponseItem>
     ) :
         DiffUtil.Callback() {
 

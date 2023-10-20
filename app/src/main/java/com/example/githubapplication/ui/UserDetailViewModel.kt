@@ -6,8 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.githubapplication.data.api.ApiConfig
 import com.example.githubapplication.data.response.DetailResponse
-import com.example.githubapplication.data.response.FollowerResponseItem
-import com.example.githubapplication.data.response.FollowingResponseItem
+import com.example.githubapplication.data.response.FollowResponseItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,11 +15,11 @@ class UserDetailViewModel : ViewModel() {
     private val userDetail = MutableLiveData<DetailResponse>()
     val getUserDetail: LiveData<DetailResponse> = userDetail
 
-    private val followers = MutableLiveData<ArrayList<FollowerResponseItem>>()
-    val getFollowers: LiveData<ArrayList<FollowerResponseItem>> = followers
+    private val followers = MutableLiveData<ArrayList<FollowResponseItem>>()
+    val getFollowers: LiveData<ArrayList<FollowResponseItem>> = followers
 
-    private val following = MutableLiveData<ArrayList<FollowingResponseItem>>()
-    val getFollowing: LiveData<ArrayList<FollowingResponseItem>> = following
+    private val following = MutableLiveData<ArrayList<FollowResponseItem>>()
+    val getFollowing: LiveData<ArrayList<FollowResponseItem>> = following
 
     private val isLoading = MutableLiveData<Boolean>()
     val getIsLoading: LiveData<Boolean> = isLoading
@@ -35,21 +34,20 @@ class UserDetailViewModel : ViewModel() {
                     userDetail.value = response.body()
                 }
             }
-
             override fun onFailure(call: Call<DetailResponse>, t: Throwable) {
                 isLoading.value = false
                 Log.e("UserDetailViewModel", "onFailure: ${t.message.toString()}")
+
             }
         })
     }
-
     fun getFollower(username: String) {
         isLoading.value = true
         val client = ApiConfig.getApiService().fetchUserFollower(username)
-        client.enqueue(object : Callback<ArrayList<FollowerResponseItem>> {
+        client.enqueue(object : Callback<ArrayList<FollowResponseItem>> {
             override fun onResponse(
-                call: Call<ArrayList<FollowerResponseItem>>,
-                response: Response<ArrayList<FollowerResponseItem>>
+                call: Call<ArrayList<FollowResponseItem>>,
+                response: Response<ArrayList<FollowResponseItem>>
             ) {
                 isLoading.value = false
                 if (response.isSuccessful && response.body() != null) {
@@ -57,7 +55,7 @@ class UserDetailViewModel : ViewModel() {
                 }
             }
 
-            override fun onFailure(call: Call<ArrayList<FollowerResponseItem>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<FollowResponseItem>>, t: Throwable) {
                 isLoading.value = false
                 Log.e("UserDetailViewModel", "onFailure: ${t.message.toString()}")
             }
@@ -67,10 +65,10 @@ class UserDetailViewModel : ViewModel() {
     fun getFollowing(username: String) {
         isLoading.value = true
         val client = ApiConfig.getApiService().fetchUserFollowing(username)
-        client.enqueue(object : Callback<ArrayList<FollowingResponseItem>> {
+        client.enqueue(object : Callback<ArrayList<FollowResponseItem>> {
             override fun onResponse(
-                call: Call<ArrayList<FollowingResponseItem>>,
-                response: Response<ArrayList<FollowingResponseItem>>
+                call: Call<ArrayList<FollowResponseItem>>,
+                response: Response<ArrayList<FollowResponseItem>>
             ) {
                 isLoading.value = false
                 if (response.isSuccessful && response.body() != null) {
@@ -78,7 +76,7 @@ class UserDetailViewModel : ViewModel() {
                 }
             }
 
-            override fun onFailure(call: Call<ArrayList<FollowingResponseItem>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<FollowResponseItem>>, t: Throwable) {
                 isLoading.value = false
                 Log.e("UserDetailViewModel", "onFailure: ${t.message.toString()}")
             }

@@ -18,10 +18,18 @@ class UserViewModel : ViewModel() {
     val userList: LiveData<List<ItemsItem>> = _userList
     private val isLoading = MutableLiveData<Boolean>()
     val getIsLoading: LiveData<Boolean> = isLoading
+    private var initialQueryRun = false
+
+    fun preloadInitialQuery() {
+        if (!initialQueryRun) {
+            val initialQuery = "WillyAgustri"
+            searchUsers(initialQuery)
+            initialQueryRun = true
+        }
+    }
 
     fun searchUsers(username: String) {
         try {
-
             isLoading.value = true
             apiService.fetchUserSearchResults(username).enqueue(object : Callback<SearchResponse> {
                 override fun onResponse(

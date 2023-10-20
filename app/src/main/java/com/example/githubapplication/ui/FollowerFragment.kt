@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubapplication.FollowAdapter
-import com.example.githubapplication.data.response.FollowerResponseItem
+import com.example.githubapplication.data.response.FollowResponseItem
 import com.example.githubapplication.databinding.FragmentFollowerBinding
 
 class FollowerFragment : Fragment() {
@@ -55,7 +55,7 @@ class FollowerFragment : Fragment() {
         adapters.setOnItemClickCallback { data -> selectedUser(data) }
     }
 
-    private fun selectedUser(user: FollowerResponseItem) {
+    private fun selectedUser(user: FollowResponseItem) {
         val i = Intent(activity, UserDetailActivity::class.java)
         i.putExtra(UserDetailActivity.EXTRA_USER, user.login)
         startActivity(i)

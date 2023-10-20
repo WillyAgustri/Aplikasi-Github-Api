@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 
 
-data class FollowerResponseItem(
+data class FollowResponseItem(
 
 	@field:SerializedName("gists_url")
 	val gistsUrl: String? = null,

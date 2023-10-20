@@ -14,7 +14,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "AUTH_TOKEN", "\"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\"")
+        buildConfigField("String", "AUTH_TOKEN", "\"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\"")
     }
 
     buildFeatures{
@@ -51,6 +51,8 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel:2.4.0")
     implementation ("androidx.fragment:fragment-ktx:1.5.1")
+    implementation ("androidx.core:core-ktx:1.7.0")
+
 
 
 

@@ -1,13 +1,10 @@
 package com.example.githubapplication.data.api
 
 import com.example.githubapplication.data.response.DetailResponse
-import com.example.githubapplication.data.response.FollowerResponseItem
-import com.example.githubapplication.data.response.FollowingResponseItem
+import com.example.githubapplication.data.response.FollowResponseItem
 import com.example.githubapplication.data.response.SearchResponse
 import retrofit2.Call
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -26,10 +23,10 @@ interface ApiService {
     @GET("users/{username}/followers")
     fun fetchUserFollower(
         @Path("username") username: String
-    ): Call<ArrayList<FollowerResponseItem>>
+    ): Call<ArrayList<FollowResponseItem>>
 
     @GET("users/{username}/following")
     fun fetchUserFollowing(
         @Path("username") username : String
-    ):  Call <ArrayList<FollowingResponseItem>>
+    ):  Call <ArrayList<FollowResponseItem>>
 }

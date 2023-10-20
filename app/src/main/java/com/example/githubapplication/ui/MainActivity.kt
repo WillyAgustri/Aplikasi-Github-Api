@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UserAdapter()
     private val viewModel: UserViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -35,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupSearchView() {
-
+        viewModel.preloadInitialQuery()
         Toast.makeText(this@MainActivity, "Create by Willy Agustri Djabar", Toast.LENGTH_SHORT).show()
         with(binding) {
             searchView.setupWithSearchBar(searchBar)

@@ -8,14 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.githubapplication.FollowingAdapter
-import com.example.githubapplication.data.response.FollowingResponseItem
+import com.example.githubapplication.FollowAdapter
+import com.example.githubapplication.data.response.FollowResponseItem
 import com.example.githubapplication.databinding.FragmentFollowingBinding
 
 class FollowingFragment : Fragment() {
 
     private val viewModel: UserDetailViewModel by viewModels()
-    private val adapters = FollowingAdapter()
+    private val adapters = FollowAdapter()
     private lateinit var binding: FragmentFollowingBinding
     private val _binding get() = binding
 
@@ -55,7 +55,7 @@ class FollowingFragment : Fragment() {
         adapters.setOnItemClickCallback { data -> selectedUser(data) }
     }
 
-    private fun selectedUser(user: FollowingResponseItem) {
+    private fun selectedUser(user: FollowResponseItem) {
         val i = Intent(activity, UserDetailActivity::class.java)
         i.putExtra(UserDetailActivity.EXTRA_USER, user.login)
         startActivity(i)
