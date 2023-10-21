@@ -2,6 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item
+        android:id="@+id/theme"
+        android:icon="@drawable/baseline_brightness_7_24"
+        android:title="@string/title_menu_theme"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_favorite"
+        android:icon="@drawable/baseline_volunteer_activism_black"
+        android:title="@string/title_menu_favorite"
+        app:drawableTint="?attr/colorControlNormal"
+        app:showAsAction="ifRoom" />
 </menu>
 
 

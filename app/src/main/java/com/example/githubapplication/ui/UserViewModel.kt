@@ -5,20 +5,29 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import com.example.githubapplication.data.api.ApiConfig
 import com.example.githubapplication.data.response.ItemsItem
 import com.example.githubapplication.data.response.SearchResponse
+import com.example.githubapplication.theme.ConfigurationPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserViewModel : ViewModel() {
+class UserViewModel(private val prefs: ConfigurationPreferences) : ViewModel() {
     private val apiService = ApiConfig.getApiService()
     private val _userList = MutableLiveData<List<ItemsItem>>()
     val userList: LiveData<List<ItemsItem>> = _userList
     private val isLoading = MutableLiveData<Boolean>()
     val getIsLoading: LiveData<Boolean> = isLoading
     private var initialQueryRun = false
+
+    companion object {
+        private const val TAG = "UserViewModel"
+    }
+
+
 
     fun preloadInitialQuery() {
         if (!initialQueryRun) {
@@ -27,6 +36,7 @@ class UserViewModel : ViewModel() {
             initialQueryRun = true
         }
     }
+
 
     fun searchUsers(username: String) {
         try {
@@ -48,6 +58,7 @@ class UserViewModel : ViewModel() {
                 override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
                     isLoading.value = false
                     Log.e(TAG, "onFailure: ${t.message.toString()}")
+
                 }
             })
 
@@ -55,5 +66,20 @@ class UserViewModel : ViewModel() {
             Log.d("Token e", e.toString())
         }
 
+    }
+
+    fun getTheme(): LiveData<Boolean> {
+        return prefs.getThemeSetting().asLiveData()
+    }
+
+
+    class ViewModelFactory(private val pref: ConfigurationPreferences) : ViewModelProvider.NewInstanceFactory() {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
+                return UserViewModel(pref) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel Class: " + modelClass.name)
+        }
     }
 }

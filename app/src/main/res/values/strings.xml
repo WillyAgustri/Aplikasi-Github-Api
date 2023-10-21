@@ -17,4 +17,7 @@
     <string name="tv_following_text">Following</string>
     <string name="tv_repository_text">Repository</string>
     <string name="no_following"> Tidak ada Following</string>
+    <string name="title_menu_favorite">Favorite</string>
+    <string name="title_menu_theme">Theme</string>
+    <string name="dark_mode">Mode Gelap</string>
 </resources>

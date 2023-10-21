@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -14,7 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "AUTH_TOKEN", "\"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\"")
+        buildConfigField("String", "AUTH_TOKEN", "\"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\"")
     }
 
     buildFeatures{
@@ -49,13 +51,15 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("de.hdodenhof:circleimageview:3.1.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel:2.6.1")
     implementation ("androidx.fragment:fragment-ktx:1.5.1")
-    implementation ("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.activity:activity-ktx:1.7.0")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    ksp("androidx.room:room-compiler:2.5.2")
 
 
 
-
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
