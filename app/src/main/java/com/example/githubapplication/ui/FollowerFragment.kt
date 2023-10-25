@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubapplication.FollowAdapter
 import com.example.githubapplication.data.response.FollowResponseItem
@@ -14,7 +14,7 @@ import com.example.githubapplication.databinding.FragmentFollowerBinding
 
 class FollowerFragment : Fragment() {
 
-    private val viewModel: UserDetailViewModel by viewModels()
+    private lateinit var viewModel: UserDetailViewModel
     private val adapters = FollowAdapter()
     private lateinit var binding: FragmentFollowerBinding
     private val _binding get() = binding
@@ -24,8 +24,15 @@ class FollowerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFollowerBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(
+            this,
+            UserDetailViewModel.ViewModelFactory(requireActivity().application)
+        )
+            .get(UserDetailViewModel::class.java)
+
         return _binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,7 +45,7 @@ class FollowerFragment : Fragment() {
     }
 
     private fun showViewModel() {
-        viewModel.getFollower(UserDetailActivity.username)
+        viewModel.getFollowing(UserDetailActivity.username)
         viewModel.getFollowers.observe(viewLifecycleOwner) { followers ->
             if (followers.isNotEmpty()) {
                 adapters.setData(followers)
@@ -52,7 +59,8 @@ class FollowerFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         _binding.rvFollower.adapter = adapters
         _binding.rvFollower.layoutManager = layoutManager
-        adapters.setOnItemClickCallback { data -> selectedUser(data) }
+        adapters.setOnItemClickCallback { data -> selectedUser(data)
+        }
     }
 
     private fun selectedUser(user: FollowResponseItem) {

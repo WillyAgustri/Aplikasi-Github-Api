@@ -22,7 +22,9 @@ class ConfigurationModel(private val pref: ConfigurationPreferences) : ViewModel
             pref.saveThemeSetting(isDarkModeActive)
         }
     }
-    class ViewModelFactory(private val pref: ConfigurationPreferences) : ViewModelProvider.NewInstanceFactory() {
+
+    class ViewModelFactory(private val pref: ConfigurationPreferences) :
+        ViewModelProvider.NewInstanceFactory() {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -31,5 +33,5 @@ class ConfigurationModel(private val pref: ConfigurationPreferences) : ViewModel
             }
             throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
-}
+    }
 }

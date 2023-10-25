@@ -1,15 +1,18 @@
 package com.example.githubapplication.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.githubapplication.R
 import com.example.githubapplication.SectionPagerAdapter
+import com.example.githubapplication.data.database.UserEntity
 import com.example.githubapplication.databinding.ActivityUserDetailBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -17,18 +20,62 @@ import com.google.android.material.tabs.TabLayoutMediator
 class UserDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserDetailBinding
-    private val viewModel: UserDetailViewModel by viewModels()
+    private val viewModel by viewModels<UserDetailViewModel> {
+        UserDetailViewModel.ViewModelFactory.getInstance(application)
+    }
+
+
+    private var isFavorite: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
         supportActionBar?.title = "Detail"
         setupViewPager()
         setupActionBar()
-        username = intent.getStringExtra(EXTRA_USER).toString()
+
         showViewModel(username)
+        username = intent.getStringExtra(EXTRA_USER).toString()
+        val avatar = intent.getStringExtra(EXTRA_AVATAR) ?: ""
+        val urlHtml = intent.getStringExtra(EXTRA_URL) ?: ""
+        val bundle = Bundle()
+        bundle.putString(EXTRA_USER, username)
         observeLoading()
+
+        viewModel.getDataByUsername(username).observe(this) {
+            isFavorite = it.isNotEmpty()
+            val favoriteUser = UserEntity(username, avatar, urlHtml)
+            if (it.isEmpty()) {
+                binding.iconFavorite.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        binding.iconFavorite.context,
+                        R.drawable.baseline_favorite_border_white
+                    )
+                )
+                binding.iconFavorite.contentDescription = "sudah Ditambahkan"
+            } else {
+                binding.iconFavorite.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        binding.iconFavorite.context,
+                        R.drawable.baseline_favorite_24
+                    )
+                )
+                binding.iconFavorite.contentDescription = "Dihapus"
+            }
+
+            binding.iconFavorite.setOnClickListener {
+                if (isFavorite) {
+                    viewModel.deleteDataUser(favoriteUser)
+                    Toast.makeText(this, "Berhasil Dihapus", Toast.LENGTH_SHORT).show()
+                } else {
+                    viewModel.insertDataUser(favoriteUser)
+                    Toast.makeText(this, "Berhasil Ditambah", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun setupViewPager() {
@@ -88,6 +135,8 @@ class UserDetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_USER = "extra_user"
+        const val EXTRA_AVATAR = "extra_avatar"
+        const val EXTRA_URL = "extra_url"
         var username = String()
 
         @StringRes

@@ -10,8 +10,10 @@
     app:cardElevation="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/colorPrimaryDark"
         android:padding="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -31,7 +33,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_mono"
             android:text="Username"
-            android:textColor="@color/black"
+
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/img_avatar"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +43,7 @@
             android:layout_width="258dp"
             android:layout_height="17dp"
             android:text="url github"
-            android:textColor="@color/black"
+
             android:fontFamily="@font/roboto_mono"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/tv_username"

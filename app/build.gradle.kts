@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.githubapplication"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.githubapplication"
@@ -16,7 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "AUTH_TOKEN", "\"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\"")
+        buildConfigField("String", "AUTH_TOKEN", "\"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\"")
     }
 
     buildFeatures{
@@ -55,8 +55,10 @@ dependencies {
     implementation ("androidx.fragment:fragment-ktx:1.5.1")
     implementation("androidx.activity:activity-ktx:1.7.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.room:room-common:2.6.0")
+    implementation("androidx.room:room-ktx:2.6.0")
     ksp("androidx.room:room-compiler:2.5.2")
-
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
 
 
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")

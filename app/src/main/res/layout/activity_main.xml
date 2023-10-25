@@ -51,6 +51,7 @@
                 android:overScrollMode="always"
                 android:scrollbarSize="0dp"
                 tools:itemCount="3"
+
                 tools:listitem="@layout/item_user" />
 
 

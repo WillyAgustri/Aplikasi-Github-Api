@@ -1,6 +1,5 @@
 package com.example.githubapplication.ui
 
-import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

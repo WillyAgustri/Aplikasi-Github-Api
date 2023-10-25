@@ -6,21 +6,19 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubapplication.R
-import com.example.githubapplication.R.id.theme
-import com.example.githubapplication.R.menu.main_menu
 import com.example.githubapplication.UserAdapter
 import com.example.githubapplication.data.response.ItemsItem
 import com.example.githubapplication.databinding.ActivityMainBinding
 import com.example.githubapplication.theme.ConfigurationPreferences
 import com.example.githubapplication.theme.DarkActivity
 import com.example.githubapplication.theme.dataStore
-import com.google.android.material.search.SearchView
+import com.example.githubapplication.userFavorite.UserFavoriteActivity
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,6 +32,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val isDarkMode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+        val themeIcon =
+            if (isDarkMode) R.drawable.baseline_brightness_4_24 else R.drawable.baseline_brightness_7_24
+        val favoriteIcon =
+            if (isDarkMode) R.drawable.baseline_volunteer_activism_white else R.drawable.baseline_volunteer_activism_black
+
+        // Mengatur ikon pada item menu "theme"
+        menu?.findItem(R.id.theme)?.setIcon(themeIcon)
+
         setupRecyclerView()
         initializeThemeAndViewModel()
         setupSearchView()
@@ -43,23 +50,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu) // Ganti "main_menu" dengan ID yang sesuai dari XML menu Anda
+        menuInflater.inflate(R.menu.main_menu, menu)
         this.menu = menu
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-//            R.id.Favorite -> {
-//                val intent = Intent(this@MainActivity, FavoriteActivity::class.java)
-//                startActivity(intent)
-//                return true
-//            }
-            R.id.theme -> {
-                val intent = Intent(this@MainActivity, DarkActivity::class.java)
-                startActivity(intent)
+            R.id.menu_favorite -> {
+                startActivity(UserFavoriteActivity::class.java)
                 return true
             }
+
+            R.id.theme -> {
+                startActivity(DarkActivity::class.java)
+                return true
+            }
+
             else -> return super.onOptionsItemSelected(item)
         }
     }
@@ -81,14 +88,11 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, UserViewModel.ViewModelFactory(modePreferences)).get(UserViewModel::class.java)
     }
 
-
-
     private fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(this)
         binding.rvReview.layoutManager = layoutManager
         binding.rvReview.adapter = adapter
     }
-
 
     private fun setupSearchView() {
         viewModel.preloadInitialQuery()
@@ -110,6 +114,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun observeUserData() {
         viewModel.userList.observe(this) { userList ->
             val isDataEmpty = userList.isEmpty()
@@ -127,6 +132,8 @@ class MainActivity : AppCompatActivity() {
     private fun selectedUser(user: ItemsItem) {
         val intent = Intent(this, UserDetailActivity::class.java)
         intent.putExtra(UserDetailActivity.EXTRA_USER, user.login)
+        intent.putExtra(UserDetailActivity.EXTRA_AVATAR, user.avatarUrl)
+        intent.putExtra(UserDetailActivity.EXTRA_URL, user.htmlUrl)
         startActivity(intent)
     }
 
@@ -135,20 +142,20 @@ class MainActivity : AppCompatActivity() {
         binding.tvUserNotFound.visibility = if (isLoading) View.GONE else View.GONE
     }
 
-
     override fun onResume() {
         super.onResume()
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-            val themeMenuItem = menu?.findItem(R.id.theme)
-            themeMenuItem?.setIcon(R.drawable.baseline_brightness_4_24)
-            val favoriteMenuItem = menu?.findItem(R.id.menu_favorite)
-            favoriteMenuItem?.setIcon(R.drawable.baseline_volunteer_activism_white)
-        } else {
-            val themeMenuItem = menu?.findItem(R.id.theme)
-            themeMenuItem?.setIcon(R.drawable.baseline_brightness_7_24)
-            val favoriteMenuItem = menu?.findItem(R.id.menu_favorite)
-            favoriteMenuItem?.setIcon(R.drawable.baseline_volunteer_activism_black)
-        }
+        val isDarkMode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+        val themeIcon =
+            if (isDarkMode) R.drawable.baseline_brightness_4_24 else R.drawable.baseline_brightness_7_24
+        val favoriteIcon =
+            if (isDarkMode) R.drawable.baseline_volunteer_activism_white else R.drawable.baseline_volunteer_activism_black
+
+        menu?.findItem(R.id.theme)?.setIcon(themeIcon)
+        menu?.findItem(R.id.menu_favorite)?.setIcon(favoriteIcon)
     }
 
+    private fun startActivity(cls: Class<out AppCompatActivity>) {
+        val intent = Intent(this, cls)
+        startActivity(intent)
+    }
 }

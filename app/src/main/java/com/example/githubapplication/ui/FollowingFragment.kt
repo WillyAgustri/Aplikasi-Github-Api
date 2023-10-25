@@ -2,11 +2,11 @@ package com.example.githubapplication.ui
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubapplication.FollowAdapter
 import com.example.githubapplication.data.response.FollowResponseItem
@@ -14,7 +14,7 @@ import com.example.githubapplication.databinding.FragmentFollowingBinding
 
 class FollowingFragment : Fragment() {
 
-    private val viewModel: UserDetailViewModel by viewModels()
+    private lateinit var viewModel: UserDetailViewModel
     private val adapters = FollowAdapter()
     private lateinit var binding: FragmentFollowingBinding
     private val _binding get() = binding
@@ -34,6 +34,13 @@ class FollowingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFollowingBinding.inflate(inflater, container, false)
+        // Menginisialisasi viewModel
+        viewModel = ViewModelProvider(
+            this,
+            UserDetailViewModel.ViewModelFactory(requireActivity().application)
+        )
+            .get(UserDetailViewModel::class.java)
+
         return _binding.root
     }
 

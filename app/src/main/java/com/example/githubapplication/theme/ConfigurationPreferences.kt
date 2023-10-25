@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
-class ConfigurationPreferences  private constructor(private val dataStore: DataStore<Preferences>) {
+
+class ConfigurationPreferences private constructor(private val dataStore: DataStore<Preferences>) {
 
     companion object {
         @Volatile

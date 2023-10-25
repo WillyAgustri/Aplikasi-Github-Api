@@ -1,13 +1,10 @@
 package com.example.githubapplication.ui
 
-import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import com.example.githubapplication.R
 
 class SplashActivity : AppCompatActivity() {

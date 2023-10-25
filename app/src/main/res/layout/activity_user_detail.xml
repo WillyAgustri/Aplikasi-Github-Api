@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".ui.UserDetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -157,6 +156,8 @@
                     app:layout_constraintStart_toStartOf="@+id/tv_name"
                     app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -182,7 +183,21 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+
+    />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/icon_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:foregroundGravity="bottom"
+        app:fabSize="normal"
+        app:layout_anchor="@+id/view_pager"
+        android:background="#FD4D40"
+        app:layout_anchorGravity="end|bottom"
+        app:srcCompat="@drawable/baseline_favorite_border_white" />
 
     <ProgressBar
         android:id="@+id/loading_progress"
@@ -192,6 +207,11 @@
         app:layout_anchor="@+id/appBarLayout"
         tools:visibility="gone"
         app:layout_anchorGravity="center" />
+
+
+
+
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
